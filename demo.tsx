@@ -12,6 +12,7 @@ import { Theme } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
+import { SelectChangeEvent } from '@mui/material/Select/Select';
 // declare module '@mui/material/styles/' {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface (remove this line if you don't have the rule enabled)
 //   interface DefaultTheme extends Theme {}
@@ -29,13 +30,20 @@ const MenuProps = {
 };
 export default function StyledCustomization() {
   const [state, setState] = React.useState('');
-  const handleChange = (e) => setState(e.target.value);
+  const handleChange = (event: SelectChangeEvent) =>
+    setState(event.target.value);
   const demoData = [
     { name: 'demo1', value: 'demo1' },
     { name: 'demo2', value: 'demo2' },
     { name: 'demo3', value: 'demo3' },
   ];
+  const value = demoData.filter((e, i) => {
+    const res = e.name == 'demo1' ? e.value : undefined;
+    // console.log(res);
+    return res;
+  });
 
+  console.log(value);
   // MenuProps.PaperProps.className = classes.selectOptions;
   return (
     <S.FormControl variant="standard">
@@ -44,13 +52,7 @@ export default function StyledCustomization() {
         MenuProps={MenuProps}
         value={state}
         onChange={handleChange}
-        endAdornment={
-          state ? (
-            <IconButton size="small" onClick={() => setState('')}>
-              <ClearIcon />
-            </IconButton>
-          ) : undefined
-        }
+        
         // MenuProps={{
         //   PaperProps: {
         //     sx: {
